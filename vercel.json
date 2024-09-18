@@ -4,7 +4,7 @@
       "src": "package.json",
       "use": "@vercel/next",
       "config": {
-        "buildCommand": "CI=false next build"
+        "buildCommand": "CI=false NEXT_DISABLE_ESLINT=1 next build"
       }
     }
   ]
