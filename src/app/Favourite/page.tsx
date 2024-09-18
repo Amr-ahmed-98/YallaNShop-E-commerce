@@ -5,10 +5,10 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { loadUserFavorites, removeFromFavorites } from '@/store/favoriteSlice';
 import { addToCart } from '@/store/cartSlice';
-import { RootState } from '@/store/store'; 
+import { AppDispatch, RootState } from '@/store/store'; 
 
 const Favourite: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { favoriteItems, isLoading, error } = useSelector((state: RootState) => state.favorite);
 
   useEffect(() => {
