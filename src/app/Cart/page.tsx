@@ -12,7 +12,6 @@ import {
 } from '@/store/cartSlice';
 
 
-
 const Cart = () => {
   const dispatch = useDispatch<AppDispatch>();
   const {

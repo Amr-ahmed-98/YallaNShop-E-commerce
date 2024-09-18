@@ -8,6 +8,7 @@ interface CartItem {
   title: string;
   price: number;
   quantity: number;
+  image: string;
 }
 
 interface CartState {
@@ -18,6 +19,7 @@ interface CartState {
   isLoading: boolean;
   error: string | null;
   countOfCartItems: number;
+ 
 }
 
 const initialState: CartState = {
@@ -27,7 +29,8 @@ const initialState: CartState = {
   quantity: 0,
   isLoading: false,
   error: null,
-  countOfCartItems: 0
+  countOfCartItems: 0,
+ 
 };
 
 export const addToCart = createAsyncThunk(
