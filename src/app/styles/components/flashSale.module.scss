@@ -1,0 +1,21 @@
+.title{
+    color: $mainColor;
+    position: relative;
+    margin: 50px 50px 0 50px;
+    font-size: 20px;
+    font-weight: bold;
+    &::before{
+        content: '';
+        position: absolute;
+        left: calc(0% - 20px);
+        width: 15px;
+        height: 30px;
+        background-color: $mainColor;
+    }
+}
+
+.descount{
+    background-color: $mainColor;
+    @apply text-white h-[30px] flex items-center justify-center w-[60px]  absolute left-[10px] top-[10px] 
+    
+}
