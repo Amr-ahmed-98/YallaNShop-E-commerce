@@ -55,40 +55,47 @@ const ProductDetails = () => {
       if (count > 1) setCount(count - 1)
     }
 
-    const handleAddingProduct = async (productId: number) => {
-      console.log('Adding product:', productId);
-      if (!token) {
-        setIsOffCanvasOpen(true); 
-      } else {
-        try {
-          console.log('Dispatching addToCart');
-          const result = await dispatch(addToCart({ productId, quantity:count }));
-          console.log('addToCart result:', result);
-          await dispatch(loadUserCart());
-        } catch (error) {
-          console.error('Error adding to cart:', error);
-        }
+    const handleAddingProduct = async (productId: number | undefined) => {
+      if (productId === undefined) {
+          console.error('Product ID is undefined');
+          return;
       }
-    };
+      if (!token) {
+          setIsOffCanvasOpen(true); 
+      } else {
+          try {
+              const result = await dispatch(addToCart({ productId, quantity: count }));
+              console.log('addToCart result:', result);
+              await dispatch(loadUserCart());
+          } catch (error) {
+              console.error('Error adding to cart:', error);
+          }
+      }
+  };
 
-    const handleAddToFavorites = async (productId: number) => {
-      if (!token) {
-        setIsOffCanvasOpen(true);
-      } else {
-        try {
-          console.log('Dispatching addToFavorites');
-          const result = await dispatch(addToFavorites(productId));
-          console.log('addToFavorites result:', result);
-          dispatch(loadUserFavorites());
-        } catch (error) {
-          console.error('Error adding to favorites:', error);
-        }
+
+    const handleAddToFavorites = async (productId: number | undefined) => {
+      if (productId === undefined) {
+          console.error('Product ID is undefined');
+          return;
       }
-    };
+      if (!token) {
+          setIsOffCanvasOpen(true);
+      } else {
+          try {
+              const result = await dispatch(addToFavorites(productId));
+              console.log('addToFavorites result:', result);
+              dispatch(loadUserFavorites());
+          } catch (error) {
+              console.error('Error adding to favorites:', error);
+          }
+      }
+  };
   
-    const isProductFavorite = (productId: number) => {
-      return Array.isArray(favoriteItems) && favoriteItems.some(item => item.id === productId);
-    };
+  const isProductFavorite = (productId: number | undefined): boolean => {
+    if (productId === undefined) return false;
+    return Array.isArray(favoriteItems) && favoriteItems.some(item => item.id === productId);
+};
 
     
   return (
@@ -126,7 +133,7 @@ const ProductDetails = () => {
                 <button className="w-[40px] h-8 border-2 border-black hover:bg-[#DB4444] hover:text-white hover:border-0"  onClick={()=>{decrease()}}>
                   <RemoveIcon/>
                 </button>
-                <button className="w-[200px] py-3 mx-4 text-white bg-[#DB4444] rounded-md hover:bg-[#B33636]" onClick={()=>handleAddingProduct(productId)}>Add To Cart</button>
+                <button className="w-[200px] py-3 mx-4 text-white bg-[#DB4444] rounded-md hover:bg-[#B33636]" onClick={()=>handleAddingProduct(data?.id)}>Add To Cart</button>
                </div> : null}
                <button 
                         className="p-2 bg-white rounded-full hover:bg-gray-100 transition-colors"
