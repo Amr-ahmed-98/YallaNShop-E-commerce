@@ -8,7 +8,7 @@ import { auth } from '@/app/firebase/config';
 import { getTokenData, googleSignIn } from '@/store/logicSlice';
 
 
-const OffCanvasSignUp = ({ isOpen, onClose }) => {
+const OffCanvasSignUp = ({ isOpen, onClose }: any) => {
   const [activeTab, setActiveTab] = useState('signup');
   const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
@@ -42,7 +42,7 @@ const OffCanvasSignUp = ({ isOpen, onClose }) => {
       const resultAction = await dispatch(googleSignIn());
       if (googleSignIn.fulfilled.match(resultAction)) {
         const token = resultAction.payload;
-        await dispatch(getTokenData(token));
+        await dispatch(getTokenData(token.token));
         onClose();
       } else if (googleSignIn.rejected.match(resultAction)) {
         console.error("Google Sign In failed:", resultAction.error);
