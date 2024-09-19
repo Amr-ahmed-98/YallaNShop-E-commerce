@@ -2,11 +2,10 @@
   "builds": [
     {
       "src": "package.json",
-      "use": "@vercel/next"
+      "use": "@vercel/next",
+      "config": {
+        "zeroConfig": true
+      }
     }
-  ],
-  "env": {
-    "NEXT_DISABLE_ESLINT": "1",
-    "CI": "false"
-  }
+  ]
 }
