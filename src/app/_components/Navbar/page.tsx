@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
 import { initializeToken, logOut } from '@/store/logicSlice';
@@ -69,9 +69,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+  
   const { token } = useSelector((state: any) => state.logicReducer);
   const dispatch = useDispatch<AppDispatch>();
-  const emailInStorage = localStorage.getItem('email');
+  // const emailInStorage = localStorage.getItem('email') ;
+  const [emailInStorage, setEmailInStorage] = useState<string | null>(null);
   const { countOfCartItems } = useSelector((state: any) => state.cart);
   const { favoriteItemsCount } = useSelector((state: RootState) => state.favorite);
  
@@ -80,6 +82,11 @@ function ResponsiveAppBar() {
     dispatch(initializeToken());
     dispatch(loadUserCart());
     dispatch(loadUserFavorites());
+
+    if (typeof window !== 'undefined') {
+      setEmailInStorage(localStorage.getItem('email'));
+    }
+    
   }, [dispatch]);
 
   useEffect(() => {
@@ -92,7 +99,6 @@ function ResponsiveAppBar() {
             const cartQuantity = response.data.cartItems.length;
             dispatch(setCartItems(cartQuantity)); 
             console.log(countOfCartItems);
-            
           }
         } catch (error) {
           console.error("Error fetching cart items:", error);

@@ -4,7 +4,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import { AppDispatch } from '@/store/store';
 import { useDispatch } from 'react-redux';
 import { useCreateUserWithEmailAndPassword, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { auth } from '@/app/firebase/config';
+import { auth } from '@/firebase/config';
 import { getTokenData, googleSignIn } from '@/store/logicSlice';
 
 
@@ -60,7 +60,7 @@ const OffCanvasSignUp = ({ isOpen, onClose }: any) => {
       if (userCredential && userCredential.user) {
         const token: string | undefined = await userCredential?.user.getIdToken();
         await dispatch(getTokenData(token));
-        onClose(); // Close the off-canvas after successful login
+        onClose();
       }
     } catch (error) {
       console.error("Error signing in:", error);
@@ -74,7 +74,7 @@ const OffCanvasSignUp = ({ isOpen, onClose }: any) => {
       if (userCredential && userCredential.user) {
         const token: string | undefined = await userCredential?.user.getIdToken();
         await dispatch(getTokenData(token));
-        onClose(); // Close the off-canvas after successful sign up
+        onClose(); 
       }
     } catch (error) {
       console.error("Error creating user:", error);

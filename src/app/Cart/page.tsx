@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -11,7 +11,6 @@ import {
   clearCart,
 } from '@/store/cartSlice';
 
-
 const Cart = () => {
   const dispatch = useDispatch<AppDispatch>();
   const {
@@ -22,7 +21,14 @@ const Cart = () => {
   } = useSelector((state: RootState) => state.cart);
   const { token } = useSelector((state: RootState) => state.logicReducer);
   
-  const currentEmail = localStorage.getItem('email') ;
+  const [currentEmail, setCurrentEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const email = localStorage.getItem('email');
+      setCurrentEmail(email);
+    }
+  }, []);
 
   useEffect(() => {
     if (currentEmail) {
@@ -33,7 +39,6 @@ const Cart = () => {
   const handleQuantityChange = useCallback((itemId: number, newQuantity: number) => {
     dispatch(addToCart({ productId: itemId, quantity: newQuantity }));
   }, [dispatch]);
-
 
   const handleClearCart = useCallback(() => {
     dispatch(clearCart());
@@ -46,8 +51,6 @@ const Cart = () => {
       </div>
     );
   }
-
-
 
   if (error) {
     return (
@@ -120,31 +123,31 @@ const Cart = () => {
               <span className='w-2/4 sm:w-1/3 flex justify-center items-center'>
                 <span className='sm:hidden font-semibold mr-2'>Quantity: </span>
                 <div className="flex items-center border border-gray-300 rounded-md overflow-hidden">
-      <input
-        type='number'
-        value={item.quantity}
-        onChange={(e) => handleQuantityChange(item.id, Math.max(0, parseInt(e.target.value, 10) || 0))}
-        className="w-12 text-center border-none focus:outline-none"
-        aria-label='Quantity'
-        min="0"
-      />
-      <div className="flex flex-col">
-        <button
-          onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
-          className="p-1 hover:bg-gray-100"
-          aria-label='Increase quantity'
-        >
-          <KeyboardArrowUpIcon />
-        </button>
-        <button
-          onClick={() => handleQuantityChange(item.id, Math.max(0, item.quantity - 1))}
-          className="p-1 hover:bg-gray-100"
-          aria-label='Decrease quantity'
-        >
-          <KeyboardArrowDownIcon />
-        </button>
-      </div>
-    </div>
+                  <input
+                    type='number'
+                    value={item.quantity}
+                    onChange={(e) => handleQuantityChange(item.id, Math.max(0, parseInt(e.target.value, 10) || 0))}
+                    className="w-12 text-center border-none focus:outline-none"
+                    aria-label='Quantity'
+                    min="0"
+                  />
+                  <div className="flex flex-col">
+                    <button
+                      onClick={() => handleQuantityChange(item.id, item.quantity + 1)}
+                      className="p-1 hover:bg-gray-100"
+                      aria-label='Increase quantity'
+                    >
+                      <KeyboardArrowUpIcon />
+                    </button>
+                    <button
+                      onClick={() => handleQuantityChange(item.id, Math.max(0, item.quantity - 1))}
+                      className="p-1 hover:bg-gray-100"
+                      aria-label='Decrease quantity'
+                    >
+                      <KeyboardArrowDownIcon />
+                    </button>
+                  </div>
+                </div>
               </span>
               <span className='w-1/4 flex items-center justify-center sm:w-1/3 text-right'>
                 <span className='sm:hidden font-semibold'>Subtotal: </span>$
