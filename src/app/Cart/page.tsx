@@ -21,7 +21,8 @@ const Cart = () => {
     error,
   } = useSelector((state: RootState) => state.cart);
   const { token } = useSelector((state: RootState) => state.logicReducer);
-  const currentEmail = localStorage.getItem('email');
+  
+  const currentEmail = localStorage.getItem('email') ;
 
   useEffect(() => {
     if (currentEmail) {

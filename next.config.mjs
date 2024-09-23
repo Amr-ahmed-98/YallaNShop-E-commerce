@@ -9,6 +9,11 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },
+  experimental: {
+    workerThreads: false,
+    cpus: 1
+  },
+  trailingSlash: true,
   eslint: {
     ignoreDuringBuilds: true,
   },
